@@ -49,7 +49,7 @@ find_package(SDL2)
 if(MYGUI_RENDERSYSTEM EQUAL 3)
 	# Find OGRE
 	find_package(ZLIB)
-	find_package(OGRE_Old)
+	find_package(OGRE)
 	macro_log_feature(OGRE_FOUND "ogre" "Support for the Ogre render system" "" TRUE "" "")
 elseif(MYGUI_RENDERSYSTEM EQUAL 4 OR MYGUI_RENDERSYSTEM EQUAL 7)
 	find_package(SDL2_image)
@@ -81,6 +81,10 @@ elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 		macro_log_feature(DirectX_FOUND "DirectX11" "Support for the DirectX11 render system" "http://msdn.microsoft.com/en-us/directx/" TRUE "" "")
 	endif()
 #elseif for RENDERSYSTEM 7 is covered with RENDERSYSTEM 4
+elseif(MYGUI_RENDERSYSTEM EQUAL 8)
+    # Find OGRE
+    find_package(OGRE_Old)
+    macro_log_feature(OGRE_FOUND "ogre" "Support for the Ogre render system" "" TRUE "" "")
 endif()
 
 #######################################################################
