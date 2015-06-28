@@ -32,7 +32,7 @@ endfunction(install_file)
 
 # install resource files
 if (MYGUI_INSTALL_DEMOS OR MYGUI_INSTALL_TOOLS)
-	if (MYGUI_RENDERSYSTEM EQUAL 3)
+	if (MYGUI_RENDERSYSTEM EQUAL 3 OR 9)
 		# copy plugins.cfg
 		if (DEFINED OGRE_CONFIG_DIR)
 			if (WIN32)
@@ -67,7 +67,7 @@ if (MYGUI_INSTALL_DEMOS OR MYGUI_INSTALL_TOOLS)
 	endif ()
 	
 	install_file (resources.xml)
-	if (MYGUI_RENDERSYSTEM EQUAL 3)
+	if (MYGUI_RENDERSYSTEM EQUAL 3 OR 9)
 		install_file (plugins.cfg)
 	endif ()
 else ()
