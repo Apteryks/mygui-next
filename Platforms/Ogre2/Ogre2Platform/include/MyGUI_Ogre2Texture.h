@@ -15,15 +15,18 @@
 
 #include <Ogre.h>
 #include <OgreResource.h>
-#include <OgreTexture.h>
-#include <OgrePixelBox.h>
 #include <OgreSharedPtr.h>
 
 #include <OgreHlms.h>
 #include <OgreHlmsDatablock.h>
 #include <OgreHlmsSamplerblock.h>
 #include <OgreHlmsManager.h>
-#include <Hlms/Unlit/OgreHlmsUnlitDatablock.h>
+#include <OgreHlmsUnlitDatablock.h>
+#include <OgreTextureBox.h>
+
+#if OGRE_VERSION_MINOR > 1
+#include "OgrePixelFormatGpu.h"
+#endif
 
 #include "MyGUI_LastHeader.h"
 
@@ -109,14 +112,26 @@ namespace MyGUI
 
 		virtual IRenderTarget* getRenderTarget();
 
-		static Ogre::TextureUsage convertUsage(TextureUsage _usage);
+#if OGRE_VERSION_MINOR > 1
+		static Ogre::PixelFormatGpu convertFormat(PixelFormat _format);
+#else
 		static Ogre::PixelFormat convertFormat(PixelFormat _format);
+#endif
 	/*internal:*/
+#if OGRE_VERSION_MINOR > 1
+		Ogre::TextureGpu* getOgreTexture()
+#else
 		Ogre::TexturePtr getOgreTexture()
+#endif
 		{
 			return mTexture;
 		}
+
+#if OGRE_VERSION_MINOR > 1
+		void setOgreTexture(Ogre::TextureGpu* _value)
+#else
 		void setOgreTexture(Ogre::TexturePtr _value)
+#endif
 		{
 			mTexture = _value;
 			setFormatByOgreTexture(); 
@@ -132,10 +147,18 @@ namespace MyGUI
 
 		virtual void loadResource(Ogre::Resource* resource);
 
+#if OGRE_VERSION_MINOR > 1
+		void setDataBlockTexture(Ogre::TextureGpu* _value);
+#else
 		void setDataBlockTexture(Ogre::TexturePtr _value);
+#endif
 
 	private:
+#if OGRE_VERSION_MINOR > 1
+		Ogre::TextureGpu* mTexture;
+#else
 		Ogre::TexturePtr mTexture;
+#endif
 		std::string mName;
 		std::string mGroup;
 
@@ -143,12 +166,15 @@ namespace MyGUI
 		PixelFormat mOriginalFormat;
 		size_t mNumElemBytes;
 
+#if OGRE_VERSION_MINOR > 1
+		Ogre::PixelFormatGpu mPixelFormat;
+#else
 		Ogre::PixelFormat mPixelFormat;
-		Ogre::TextureUsage mUsage;
+#endif
 
 		ITextureInvalidateListener* mListener;
 		IRenderTarget* mRenderTarget;
-		Ogre::PixelBox mTmpData;
+		Ogre::TextureBox mTmpData;
 
 		Ogre::HlmsUnlitDatablock* mDataBlock;
 
