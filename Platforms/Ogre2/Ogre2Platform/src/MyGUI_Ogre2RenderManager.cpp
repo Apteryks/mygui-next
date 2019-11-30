@@ -14,21 +14,39 @@
 
 #include <Compositor/OgreCompositorManager2.h>
 
+#if OGRE_VERSION_MINOR > 1
+#include "OgreTextureGpu.h"
+#include "OgreTextureGpuManager.h"
+#include "OgreWindow.h"
+#endif
+
 namespace MyGUI
 {
 	const Ogre::uint8 Ogre2RenderManager::RENDER_QUEUE_OVERLAY = 254;
 	Ogre::IdString OgreCompositorPassProvider::mPassId = Ogre::IdString("MYGUI");
 
+#if OGRE_VERSION_MINOR < 2
 	MyGUIPass::MyGUIPass(const Ogre::CompositorPassDef *definition, const Ogre::CompositorChannel &target,
 		Ogre::CompositorNode *parentNode)
 		: Ogre::CompositorPass(definition, target, parentNode)
 	{
-
 	}
+#else
+	MyGUIPass::MyGUIPass(const Ogre::CompositorPassDef *definition, const Ogre::RenderTargetViewDef* rtv,
+		Ogre::CompositorNode *parentNode)
+		: Ogre::CompositorPass(definition, parentNode)
+	{
+		this->initialize(rtv);
+	}
+#endif
 
 	void MyGUIPass::execute(const Ogre::Camera *lodCameraconst)
 	{
+        profilingBegin();
+        executeResourceTransitions();
+        setRenderPassDescToCurrent();
 		static_cast<MyGUI::Ogre2RenderManager*>(MyGUI::RenderManager::getInstancePtr())->render();
+        profilingEnd();
 	}
 
 	Ogre2RenderManager& Ogre2RenderManager::getInstance()
@@ -51,7 +69,11 @@ namespace MyGUI
 	{
 	}
 
+#if OGRE_VERSION_MINOR < 2
 	void Ogre2RenderManager::initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene)
+#else
+	void Ogre2RenderManager::initialise(Ogre::Window* _window, Ogre::SceneManager* _scene)
+#endif
 	{
 		MYGUI_PLATFORM_ASSERT(!mIsInitialise, getClassTypeName() << " initialised twice");
 		MYGUI_PLATFORM_LOG(Info, "* Initialise: " << getClassTypeName());
@@ -151,7 +173,11 @@ namespace MyGUI
 		return mRenderSystem;
 	}
 
+#if OGRE_VERSION_MINOR < 2
 	void Ogre2RenderManager::setRenderWindow(Ogre::RenderWindow* _window)
+#else
+	void Ogre2RenderManager::setRenderWindow(Ogre::Window* _window)
+#endif
 	{
 		// отписываемся
 		if (mWindow != nullptr)
@@ -250,10 +276,13 @@ namespace MyGUI
 	}
 
 	// для оповещений об изменении окна рендера
+#if OGRE_VERSION_MINOR < 2
 	void Ogre2RenderManager::windowResized(Ogre::RenderWindow* _window)
+#else
+	void Ogre2RenderManager::windowResized(Ogre::Window* _window)
+#endif
 	{
-		float scale = _window->getViewPointToPixelScale();
-		mViewSize.set(_window->getWidth() / scale, _window->getHeight() / scale);
+		mViewSize.set(_window->getWidth(), _window->getHeight());
 		// обновить всех
 		mUpdate = true;
 
@@ -319,12 +348,28 @@ namespace MyGUI
 		MapTexture::const_iterator item = mTextures.find(_name);
 		if (item == mTextures.end())
 		{
+#if OGRE_VERSION_MINOR < 2
 			Ogre::TexturePtr texture = (Ogre::TexturePtr)Ogre::TextureManager::getSingleton().getByName(_name);
 			if (!texture.isNull())
 			{
 				ITexture* result = createTexture(_name);
 				static_cast<Ogre2Texture*>(result)->setOgreTexture(texture);
 				return result;
+#else
+			Ogre::TextureGpuManager *textureMgr = Ogre::Root::getSingletonPtr()->getRenderSystem()->getTextureGpuManager();
+			const Ogre::String* name = textureMgr->findResourceNameStr(_name);
+			if (name) {
+				Ogre::TextureGpu *texture = textureMgr->createOrRetrieveTexture(
+					_name,
+					Ogre::GpuPageOutStrategy::Discard,
+					Ogre::TextureFlags::PrefersLoadingFromFileAsSRGB,
+					Ogre::TextureTypes::Type2D,
+					Ogre::ResourceGroupManager::
+					AUTODETECT_RESOURCE_GROUP_NAME);
+				ITexture* result = createTexture(_name);
+				static_cast<Ogre2Texture*>(result)->setOgreTexture(texture);
+				return result;
+#endif
 			}
 			return nullptr;
 		}
@@ -333,10 +378,15 @@ namespace MyGUI
 
 	bool Ogre2RenderManager::isFormatSupported(PixelFormat _format, TextureUsage _usage)
 	{
+#if OGRE_VERSION_MINOR == 1
 		return Ogre::TextureManager::getSingleton().isFormatSupported(
 			Ogre::TEX_TYPE_2D,
 			Ogre2Texture::convertFormat(_format),
 			Ogre2Texture::convertUsage(_usage));
+#else
+		if (_format == PixelFormat::L8A8) return false;
+		return true; // FIXME
+#endif
 	}
 
 	void Ogre2RenderManager::destroyAllResources()
@@ -380,7 +430,11 @@ namespace MyGUI
 		return mInfo;
 	}
 
+#if OGRE_VERSION_MINOR < 2
 	Ogre::RenderWindow* Ogre2RenderManager::getRenderWindow()
+#else
+	Ogre::Window* Ogre2RenderManager::getRenderWindow()
+#endif
 	{
 		return mWindow;
 	}

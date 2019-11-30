@@ -41,8 +41,13 @@ namespace MyGUI
 	class MyGUIPass : public Ogre::CompositorPass
 	{
 	public:
+#if OGRE_VERSION_MINOR < 2
 		MyGUIPass(const Ogre::CompositorPassDef *definition, const Ogre::CompositorChannel &target,
 			Ogre::CompositorNode *parentNode);
+#else
+		MyGUIPass(const Ogre::CompositorPassDef *definition, const Ogre::RenderTargetViewDef* rtv,
+			Ogre::CompositorNode *parentNode);
+#endif
 
 		virtual void execute(const Ogre::Camera *lodCameraconst);
 	};
@@ -63,12 +68,21 @@ namespace MyGUI
 				return OGRE_NEW MyGUI::MyGUIPassDef(parentTargetDef);
 		}
 
+#if OGRE_VERSION_MINOR < 2
 		Ogre::CompositorPass* addPass(const Ogre::CompositorPassDef *definition, Ogre::Camera *defaultCamera,
 			Ogre::CompositorNode *parentNode, const Ogre::CompositorChannel &target,
 			Ogre::SceneManager *sceneManager)
 		{
 			return OGRE_NEW MyGUI::MyGUIPass(definition, target, parentNode);
 		}
+#else
+		Ogre::CompositorPass* addPass(const Ogre::CompositorPassDef *definition, Ogre::Camera *defaultCamera,
+			Ogre::CompositorNode *parentNode, const Ogre::RenderTargetViewDef* rtv,
+			Ogre::SceneManager *sceneManager)
+		{
+			return OGRE_NEW MyGUI::MyGUIPass(definition, rtv, parentNode);
+		}
+#endif
 
 		static Ogre::IdString mPassId;
 	};
@@ -86,7 +100,11 @@ namespace MyGUI
 		// FrameListener
 		bool frameStarted(const Ogre::FrameEvent &evt);
 
+#if OGRE_VERSION_MINOR < 2
 		void initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene);
+#else
+		void initialise(Ogre::Window* _window, Ogre::SceneManager* _scene);
+#endif
 		void shutdown();
 
 		static Ogre2RenderManager& getInstance();
@@ -127,13 +145,21 @@ namespace MyGUI
 		void setRenderSystem(Ogre::RenderSystem* _render);
 		Ogre::RenderSystem* getRenderSystem();
 
+#if OGRE_VERSION_MINOR < 2
 		void setRenderWindow(Ogre::RenderWindow* _window);
+#else
+		void setRenderWindow(Ogre::Window* _window);
+#endif
 
 		/** Set scene manager where MyGUI will be rendered */
 		void setSceneManager(Ogre::SceneManager* _scene);
 		Ogre::SceneManager* getSceneManager();
 
+#if OGRE_VERSION_MINOR < 2
 		Ogre::RenderWindow* getRenderWindow();
+#else
+		Ogre::Window* getRenderWindow();
+#endif
 
 		bool getManualRender();
 		void setManualRender(bool _value);
@@ -147,7 +173,11 @@ namespace MyGUI
 #endif
 
 	private:
+#if OGRE_VERSION_MINOR < 2
 		virtual void windowResized(Ogre::RenderWindow* _window);
+#else
+		virtual void windowResized(Ogre::Window* _window);
+#endif
 
 		// восстанавливаем буферы
 		virtual void eventOccurred(const Ogre::String& eventName, const Ogre::NameValuePairList* parameters);
@@ -166,7 +196,11 @@ namespace MyGUI
 		VertexColourType mVertexFormat;
 
 		// окно, на которое мы подписываемся для изменения размеров
+#if OGRE_VERSION_MINOR < 2
 		Ogre::RenderWindow* mWindow;
+#else
+		Ogre::Window* mWindow;
+#endif
 
 		Ogre::RenderSystem* mRenderSystem;
 

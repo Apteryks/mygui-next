@@ -21,7 +21,11 @@ namespace MyGUI
 		public IRenderTarget
 	{
 	public:
+#if OGRE_VERSION_MINOR < 2
 		Ogre2RTTexture(Ogre::TexturePtr _texture);
+#else
+		Ogre2RTTexture(Ogre::TextureGpu* _texture);
+#endif
 		virtual ~Ogre2RTTexture();
 
 		virtual void begin();
@@ -36,9 +40,15 @@ namespace MyGUI
 
 	private:
 		RenderTargetInfo mRenderTargetInfo;
+#if OGRE_VERSION_MINOR < 2
 		Ogre::Viewport* mViewport;
 		Ogre::Viewport* mSaveViewport;
 		Ogre::TexturePtr mTexture;
+#else
+		Ogre::RenderPassDescriptor* mRenderPassDesc;
+		Ogre::RenderPassDescriptor* mSaveRenderPassDesc;
+		Ogre::TextureGpu* mTexture;
+#endif
 		Ogre::Matrix4 mProjectMatrix;
 	};
 

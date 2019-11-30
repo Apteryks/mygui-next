@@ -16,6 +16,8 @@
 #include "MyGUI_Ogre2Texture.h"
 #include "MyGUI_LogManager.h"
 
+#include <OgrePrerequisites.h>
+
 #include "MyGUI_LastHeader.h"
 
 namespace MyGUI
@@ -40,7 +42,11 @@ namespace MyGUI
 			delete mLogManager;
 		}
 
+#if OGRE_VERSION_MINOR < 2
 		void initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene, const std::string& _group = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, const std::string& _logName = MYGUI_PLATFORM_LOG_FILENAME)
+#else
+		void initialise(Ogre::Window* _window, Ogre::SceneManager* _scene, const std::string& _group = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, const std::string& _logName = MYGUI_PLATFORM_LOG_FILENAME)
+#endif
 		{
 			assert(!mIsInitialise);
 			mIsInitialise = true;
