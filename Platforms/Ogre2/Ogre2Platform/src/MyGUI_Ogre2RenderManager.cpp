@@ -282,7 +282,7 @@ namespace MyGUI
 	void Ogre2RenderManager::windowResized(Ogre::Window* _window)
 #endif
 	{
-		mViewSize.set(_window->getWidth(), _window->getHeight());
+		mViewSize.set(1024, 1024);
 		// обновить всех
 		mUpdate = true;
 
