@@ -179,6 +179,23 @@ namespace MyGUI
 		virtual void windowResized(Ogre::Window* _window);
 #endif
 
+		virtual void windowMoved(Window* rw)
+		{
+			(void)rw;
+		}
+		virtual bool windowClosing(Window* rw)
+		{
+			(void)rw; return true;
+		}
+		virtual void windowClosed(Window* rw)
+		{
+			(void)rw;
+		}
+		virtual void windowFocusChange(Window* rw)
+		{
+			(void)rw;
+		}
+
 		// восстанавливаем буферы
 		virtual void eventOccurred(const Ogre::String& eventName, const Ogre::NameValuePairList* parameters);
 
