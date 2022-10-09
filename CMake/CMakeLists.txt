@@ -11,7 +11,8 @@ else(WIN32)
 endif(WIN32)
 
 set(INST_FILES
-  Packages/FindOGRE.cmake
+  Packages/FindOGRE_old.cmake
+  Packages/FindOGRE_next.cmake
   Utils/FindPkgMacros.cmake
   Utils/PreprocessorUtils.cmake
   Utils/MyGUIConfigTargets.cmake

@@ -81,9 +81,9 @@ elseif(MYGUI_RENDERSYSTEM EQUAL 6)
 		macro_log_feature(DirectX_FOUND "DirectX11" "Support for the DirectX11 render system" "http://msdn.microsoft.com/en-us/directx/" TRUE "" "")
 	endif()
 #elseif for RENDERSYSTEM 7 is covered with RENDERSYSTEM 4
-elseif(MYGUI_RENDERSYSTEM EQUAL 8)
+elseif(MYGUI_RENDERSYSTEM EQUAL 9)
     # Find OGRE
-    find_package(OGRE_Old)
+    find_package(OGRE)
     macro_log_feature(OGRE_FOUND "ogre" "Support for the Ogre render system" "" TRUE "" "")
 endif()
 
