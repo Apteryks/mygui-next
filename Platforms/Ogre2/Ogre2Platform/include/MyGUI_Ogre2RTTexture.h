@@ -21,7 +21,7 @@ namespace MyGUI
 		public IRenderTarget
 	{
 	public:
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 		Ogre2RTTexture(Ogre::TexturePtr _texture);
 #else
 		Ogre2RTTexture(Ogre::TextureGpu* _texture);
@@ -40,7 +40,7 @@ namespace MyGUI
 
 	private:
 		RenderTargetInfo mRenderTargetInfo;
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 		Ogre::Viewport* mViewport;
 		Ogre::Viewport* mSaveViewport;
 		Ogre::TexturePtr mTexture;

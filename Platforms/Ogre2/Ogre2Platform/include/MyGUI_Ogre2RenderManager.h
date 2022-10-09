@@ -41,7 +41,7 @@ namespace MyGUI
 	class MyGUIPass : public Ogre::CompositorPass
 	{
 	public:
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 		MyGUIPass(const Ogre::CompositorPassDef *definition, const Ogre::CompositorChannel &target,
 			Ogre::CompositorNode *parentNode);
 #else
@@ -68,7 +68,7 @@ namespace MyGUI
 				return OGRE_NEW MyGUI::MyGUIPassDef(parentTargetDef);
 		}
 
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 		Ogre::CompositorPass* addPass(const Ogre::CompositorPassDef *definition, Ogre::Camera *defaultCamera,
 			Ogre::CompositorNode *parentNode, const Ogre::CompositorChannel &target,
 			Ogre::SceneManager *sceneManager)
@@ -100,8 +100,8 @@ namespace MyGUI
 		// FrameListener
 		bool frameStarted(const Ogre::FrameEvent &evt);
 
-#if OGRE_VERSION_MINOR < 2
-		void initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene);
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+		void initialise(Ogre::Window* _window, Ogre::SceneManager* _scene);
 #else
 		void initialise(Ogre::Window* _window, Ogre::SceneManager* _scene);
 #endif
@@ -145,8 +145,8 @@ namespace MyGUI
 		void setRenderSystem(Ogre::RenderSystem* _render);
 		Ogre::RenderSystem* getRenderSystem();
 
-#if OGRE_VERSION_MINOR < 2
-		void setRenderWindow(Ogre::RenderWindow* _window);
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+		void setRenderWindow(Ogre::Window* _window);
 #else
 		void setRenderWindow(Ogre::Window* _window);
 #endif
@@ -155,8 +155,8 @@ namespace MyGUI
 		void setSceneManager(Ogre::SceneManager* _scene);
 		Ogre::SceneManager* getSceneManager();
 
-#if OGRE_VERSION_MINOR < 2
-		Ogre::RenderWindow* getRenderWindow();
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+		Ogre::Window* getRenderWindow();
 #else
 		Ogre::Window* getRenderWindow();
 #endif
@@ -173,8 +173,8 @@ namespace MyGUI
 #endif
 
 	private:
-#if OGRE_VERSION_MINOR < 2
-		virtual void windowResized(Ogre::RenderWindow* _window);
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+		virtual void windowResized(Ogre::Window* _window);
 #else
 		virtual void windowResized(Ogre::Window* _window);
 #endif
@@ -213,8 +213,8 @@ namespace MyGUI
 		VertexColourType mVertexFormat;
 
 		// окно, на которое мы подписываемся для изменения размеров
-#if OGRE_VERSION_MINOR < 2
-		Ogre::RenderWindow* mWindow;
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+		Ogre::Window* mWindow;
 #else
 		Ogre::Window* mWindow;
 #endif

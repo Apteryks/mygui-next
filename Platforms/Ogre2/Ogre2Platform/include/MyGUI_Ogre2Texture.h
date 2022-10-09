@@ -24,7 +24,7 @@
 #include <OgreHlmsUnlitDatablock.h>
 #include <OgreTextureBox.h>
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 #include "OgrePixelFormatGpu.h"
 #endif
 
@@ -112,13 +112,13 @@ namespace MyGUI
 
 		virtual IRenderTarget* getRenderTarget();
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		static Ogre::PixelFormatGpu convertFormat(PixelFormat _format);
 #else
 		static Ogre::PixelFormat convertFormat(PixelFormat _format);
 #endif
 	/*internal:*/
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		Ogre::TextureGpu* getOgreTexture()
 #else
 		Ogre::TexturePtr getOgreTexture()
@@ -127,7 +127,7 @@ namespace MyGUI
 			return mTexture;
 		}
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		void setOgreTexture(Ogre::TextureGpu* _value)
 #else
 		void setOgreTexture(Ogre::TexturePtr _value)
@@ -147,14 +147,14 @@ namespace MyGUI
 
 		virtual void loadResource(Ogre::Resource* resource);
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		void setDataBlockTexture(Ogre::TextureGpu* _value);
 #else
 		void setDataBlockTexture(Ogre::TexturePtr _value);
 #endif
 
 	private:
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		Ogre::TextureGpu* mTexture;
 #else
 		Ogre::TexturePtr mTexture;
@@ -166,7 +166,7 @@ namespace MyGUI
 		PixelFormat mOriginalFormat;
 		size_t mNumElemBytes;
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		Ogre::PixelFormatGpu mPixelFormat;
 #else
 		Ogre::PixelFormat mPixelFormat;

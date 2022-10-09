@@ -14,7 +14,7 @@
 
 #include "MyGUI_LastHeader.h"
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 #include "OgreTextureGpu.h"
 #include "OgreTextureGpuManager.h"
 #include "OgrePixelFormatGpu.h"
@@ -205,7 +205,7 @@ namespace MyGUI
 
 
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 	Ogre::PixelFormatGpu Ogre2Texture::convertFormat(PixelFormat _format)
 	{
 		if (_format == PixelFormat::L8) return Ogre::PixelFormatGpu::PFG_R8_UNORM;
@@ -277,7 +277,7 @@ namespace MyGUI
 
 		Ogre::TextureGpuManager* manager = Ogre::Root::getSingletonPtr()->getRenderSystem()->getTextureGpuManager();
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		bool needLoadTexture = false;
 #endif
 
@@ -305,7 +305,7 @@ namespace MyGUI
 			needLoadTexture = true;
 #endif
 		}
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 		if (needLoadTexture) {
 			Ogre::TextureGpuManager *textureMgr = Ogre::Root::getSingletonPtr()->getRenderSystem()->getTextureGpuManager();
 			mTexture = textureMgr->createOrRetrieveTexture(
@@ -414,7 +414,7 @@ namespace MyGUI
 	}
 
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2 
 	void Ogre2Texture::setDataBlockTexture(Ogre::TextureGpu* _value)
 	{
 		mDataBlock->setTexture(TEXTURE_UNIT_NUMBER, _value);

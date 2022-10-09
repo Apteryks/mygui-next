@@ -8,14 +8,14 @@
 #include "MyGUI_Ogre2RTTexture.h"
 #include "MyGUI_Ogre2RenderManager.h"
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 #include "OgreTextureGpu.h"
 #endif
 
 namespace MyGUI
 {
 
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 	Ogre2RTTexture::Ogre2RTTexture(Ogre::TexturePtr _texture) :
 		mViewport(nullptr),
 		mSaveViewport(nullptr),
@@ -44,7 +44,7 @@ namespace MyGUI
 				mRenderTargetInfo.pixScaleY = 1.0f / float(height);
 			}
 
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 			if (mTexture->getBuffer()->getRenderTarget()->requiresTextureFlipping())
 #else
 			if (mTexture->requiresTextureFlipping())
@@ -64,7 +64,7 @@ namespace MyGUI
 
 	void Ogre2RTTexture::begin()
 	{
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 		Ogre::RenderTexture* rtt = mTexture->getBuffer()->getRenderTarget();
 
 		if (mViewport == nullptr)
@@ -107,7 +107,7 @@ namespace MyGUI
 	void Ogre2RTTexture::end()
 	{
 		Ogre::RenderSystem* system = Ogre::Root::getSingleton().getRenderSystem();
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 		system->_setViewport(mSaveViewport);
 #else
 		// no need to restore RenderPassDesc
