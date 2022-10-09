@@ -101,7 +101,7 @@ namespace MyGUI
 		bool frameStarted(const Ogre::FrameEvent &evt);
 
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-		void initialise(Ogre::Window* _window, Ogre::SceneManager* _scene);
+		void initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene);
 #else
 		void initialise(Ogre::Window* _window, Ogre::SceneManager* _scene);
 #endif
@@ -146,7 +146,7 @@ namespace MyGUI
 		Ogre::RenderSystem* getRenderSystem();
 
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-		void setRenderWindow(Ogre::Window* _window);
+		void setRenderWindow(Ogre::RenderWindow* _window);
 #else
 		void setRenderWindow(Ogre::Window* _window);
 #endif
@@ -156,7 +156,7 @@ namespace MyGUI
 		Ogre::SceneManager* getSceneManager();
 
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-		Ogre::Window* getRenderWindow();
+		Ogre::RenderWindow* getRenderWindow();
 #else
 		Ogre::Window* getRenderWindow();
 #endif
@@ -174,7 +174,7 @@ namespace MyGUI
 
 	private:
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-		virtual void windowResized(Ogre::Window* _window);
+		virtual void windowResized(Ogre::RenderWindow* _window);
 #else
 		virtual void windowResized(Ogre::Window* _window);
 #endif
@@ -214,7 +214,7 @@ namespace MyGUI
 
 		// окно, на которое мы подписываемся для изменения размеров
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-		Ogre::Window* mWindow;
+		Ogre::RenderWindow* mWindow;
 #else
 		Ogre::Window* mWindow;
 #endif
