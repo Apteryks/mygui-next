@@ -14,7 +14,7 @@
 
 #include <Compositor/OgreCompositorManager2.h>
 
-#if OGRE_VERSION_MINOR > 1
+#if OGRE_VERSION_MINOR > 1 || OGRE_VERSION_MAJOR > 2
 #include "OgreTextureGpu.h"
 #include "OgreTextureGpuManager.h"
 #include "OgreWindow.h"
@@ -25,7 +25,7 @@ namespace MyGUI
 	const Ogre::uint8 Ogre2RenderManager::RENDER_QUEUE_OVERLAY = 254;
 	Ogre::IdString OgreCompositorPassProvider::mPassId = Ogre::IdString("MYGUI");
 
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 	MyGUIPass::MyGUIPass(const Ogre::CompositorPassDef *definition, const Ogre::CompositorChannel &target,
 		Ogre::CompositorNode *parentNode)
 		: Ogre::CompositorPass(definition, target, parentNode)
@@ -69,8 +69,8 @@ namespace MyGUI
 	{
 	}
 
-#if OGRE_VERSION_MINOR < 2
-	void Ogre2RenderManager::initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene)
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+	void Ogre2RenderManager::initialise(Ogre::Window* _window, Ogre::SceneManager* _scene)
 #else
 	void Ogre2RenderManager::initialise(Ogre::Window* _window, Ogre::SceneManager* _scene)
 #endif
@@ -173,8 +173,8 @@ namespace MyGUI
 		return mRenderSystem;
 	}
 
-#if OGRE_VERSION_MINOR < 2
-	void Ogre2RenderManager::setRenderWindow(Ogre::RenderWindow* _window)
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+	void Ogre2RenderManager::setRenderWindow(Ogre::Window* _window)
 #else
 	void Ogre2RenderManager::setRenderWindow(Ogre::Window* _window)
 #endif
@@ -276,8 +276,8 @@ namespace MyGUI
 	}
 
 	// для оповещений об изменении окна рендера
-#if OGRE_VERSION_MINOR < 2
-	void Ogre2RenderManager::windowResized(Ogre::RenderWindow* _window)
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+	void Ogre2RenderManager::windowResized(Ogre::Window* _window)
 #else
 	void Ogre2RenderManager::windowResized(Ogre::Window* _window)
 #endif
@@ -348,7 +348,7 @@ namespace MyGUI
 		MapTexture::const_iterator item = mTextures.find(_name);
 		if (item == mTextures.end())
 		{
-#if OGRE_VERSION_MINOR < 2
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
 			Ogre::TexturePtr texture = (Ogre::TexturePtr)Ogre::TextureManager::getSingleton().getByName(_name);
 			if (!texture.isNull())
 			{
@@ -430,8 +430,8 @@ namespace MyGUI
 		return mInfo;
 	}
 
-#if OGRE_VERSION_MINOR < 2
-	Ogre::RenderWindow* Ogre2RenderManager::getRenderWindow()
+#if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
+	Ogre::Window* Ogre2RenderManager::getRenderWindow()
 #else
 	Ogre::Window* Ogre2RenderManager::getRenderWindow()
 #endif
