@@ -1,10 +1,15 @@
 set (PROJECTNAME MyGUI.Ogre2Platform)
 
+message(STATUS "Platform Ogre-next:" ${OGRE_NEXT})
+
 include_directories(
  include
  ${MYGUI_SOURCE_DIR}/MyGUIEngine/include
+ ${OGRE_CONFIG_INCLUDE_DIR}
  ${OGRE_INCLUDE_DIR}
  ${OGRE_SOURCE_DIR}
+ ${OGRE_NEXT}/Components/Hlms/Unlit/include
+ ${OGRE_NEXT}/Components/Hlms/Common/include
 )
 
 include(${PROJECTNAME}.list)
