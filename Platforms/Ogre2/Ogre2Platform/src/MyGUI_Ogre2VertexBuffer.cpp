@@ -34,7 +34,7 @@ namespace MyGUI
 
 	void Ogre2VertexBuffer::createVertexBuffer()
 	{
-		mRenderOperation.vertexData = new Ogre::v1::VertexData();
+		mRenderOperation.vertexData = new Ogre::v1::VertexData( Ogre::v1::HardwareBufferManager::getSingletonPtr( ) );
 		mRenderOperation.vertexData->vertexStart = 0;
 
 		Ogre::v1::VertexDeclaration* vd = mRenderOperation.vertexData->vertexDeclaration;
