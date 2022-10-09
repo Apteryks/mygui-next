@@ -70,7 +70,7 @@ namespace MyGUI
 	}
 
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-	void Ogre2RenderManager::initialise(Ogre::Window* _window, Ogre::SceneManager* _scene)
+	void Ogre2RenderManager::initialise(Ogre::RenderWindow* _window, Ogre::SceneManager* _scene)
 #else
 	void Ogre2RenderManager::initialise(Ogre::Window* _window, Ogre::SceneManager* _scene)
 #endif
@@ -174,7 +174,7 @@ namespace MyGUI
 	}
 
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-	void Ogre2RenderManager::setRenderWindow(Ogre::Window* _window)
+	void Ogre2RenderManager::setRenderWindow(Ogre::RenderWindow* _window)
 #else
 	void Ogre2RenderManager::setRenderWindow(Ogre::Window* _window)
 #endif
@@ -277,7 +277,7 @@ namespace MyGUI
 
 	// для оповещений об изменении окна рендера
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-	void Ogre2RenderManager::windowResized(Ogre::Window* _window)
+	void Ogre2RenderManager::windowResized(Ogre::RenderWindow* _window)
 #else
 	void Ogre2RenderManager::windowResized(Ogre::Window* _window)
 #endif
@@ -431,7 +431,7 @@ namespace MyGUI
 	}
 
 #if OGRE_VERSION_MINOR < 2 && OGRE_VERSION_MAJOR < 3
-	Ogre::Window* Ogre2RenderManager::getRenderWindow()
+	Ogre::RenderWindow* Ogre2RenderManager::getRenderWindow()
 #else
 	Ogre::Window* Ogre2RenderManager::getRenderWindow()
 #endif
