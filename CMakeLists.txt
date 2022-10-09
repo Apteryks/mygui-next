@@ -8,6 +8,7 @@
 cmake_minimum_required(VERSION 2.6)
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 cmake_policy(SET CMP0003 NEW)
+cmake_policy(SET CMP0017 NEW)
 
 project(MYGUI)
 
@@ -112,7 +113,7 @@ option(MYGUI_STATIC "Static build" FALSE)
 option(MYGUI_USE_FREETYPE "Use freetype for font rendering" TRUE)
 option(MYGUI_DONT_USE_OBSOLETE "Remove obsole functions from build" FALSE)
 
-set(MYGUI_RENDERSYSTEM 3 CACHE STRING
+set(MYGUI_RENDERSYSTEM 8 CACHE STRING
 "Specify the Render System. Possible values:
   1 - Dummy
   2 - Export (latter)
@@ -121,16 +122,16 @@ set(MYGUI_RENDERSYSTEM 3 CACHE STRING
   5 - Direct3D 9
   6 - Direct3D 11
   7 - OpenGL 3.x
-  8 - Ogre 2.x"
+  8 - Ogre 3.x"
 )
 
 if(MYGUI_RENDERSYSTEM EQUAL 4 OR MYGUI_RENDERSYSTEM EQUAL 7)
 	option(MYGUI_USE_SYSTEM_GLEW "Use system OpenGL Extension Wrangler Library (GLEW)" FALSE)
 endif()
 
-option(MYGUI_BUILD_DEMOS "Build MyGUI demos" TRUE)
-option(MYGUI_BUILD_PLUGINS "Build MyGUI plugins" TRUE)
-option(MYGUI_BUILD_TOOLS "Build the tools" TRUE)
+option(MYGUI_BUILD_DEMOS "Build MyGUI demos" FALSE)
+option(MYGUI_BUILD_PLUGINS "Build MyGUI plugins" FALSE)
+option(MYGUI_BUILD_TOOLS "Build the tools" FALSE)
 option(MYGUI_BUILD_UNITTESTS "Build the unit tests" FALSE)
 option(MYGUI_BUILD_TEST_APP "Build TestApp" FALSE)
 option(MYGUI_BUILD_WRAPPER "Build the wrapper" FALSE)
@@ -147,7 +148,7 @@ MARK_AS_ADVANCED(MYGUI_STANDALONE_BUILD)
 option(MYGUI_GENERATE_LIST_FILES_FROM_VSPROJECT "Generate .list files from visual studio project files" FALSE)
 
 if (WIN32)
-	set(MYGUI_SAMPLES_INPUT 2 CACHE STRING
+	set(MYGUI_SAMPLES_INPUT 4 CACHE STRING
 	"Specify the Input Manager for samples. Possible values:
 	  1 - OIS
 	  2 - Win32
