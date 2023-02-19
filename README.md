@@ -33,7 +33,23 @@ cd mygui-next
 
 mkdir build
 cd build
-
+```
+Now to build (RelWithDebInfo configuration by default) here:  
+```
 cmake ..
+make -j6
+```
+
+Or e.g. to get both Debug and Release builds, in own dirs:
+```
+mkdir Debug
+cd Debug
+cmake ./../.. -DCMAKE_BUILD_TYPE="Debug"
+make -j6
+
+cd ..
+mkdir Release
+cd Release
+cmake ./../.. -DCMAKE_BUILD_TYPE="Release"
 make -j6
 ```
