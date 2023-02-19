@@ -242,12 +242,15 @@ namespace MyGUI
 		setManualRender(true);
 
 		mSceneManager->getRenderQueue()->clear();
+		mSceneManager->getRenderQueue()->renderPassPrepare(false, false);
 
 		//get mygui to itterate through renderables and call 'doRender'
 		//This will add renderbles to the Ogre render queue
 		onRenderToTarget(this, mUpdate);
 
-		mSceneManager->getRenderQueue()->render(mSceneManager->getDestinationRenderSystem(), RENDER_QUEUE_OVERLAY, RENDER_QUEUE_OVERLAY+1, false, false);
+		mRenderSystem->executeRenderPassDescriptorDelayedActions();
+		mSceneManager->getRenderQueue()->render(mRenderSystem, RENDER_QUEUE_OVERLAY, RENDER_QUEUE_OVERLAY+1, false, false);
+		// mSceneManager->getRenderQueue()->render(mSceneManager->getDestinationRenderSystem(), RENDER_QUEUE_OVERLAY, RENDER_QUEUE_OVERLAY+1, false, false);
 
 		// сбрасываем флаг
 		mUpdate = false;
