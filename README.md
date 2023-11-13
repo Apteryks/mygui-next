@@ -19,10 +19,12 @@ Root directory structure:
   * ogre-next-deps/
 * build_ogre_scripts-master.7z
 
-In root dir a `build_ogre_*` script (from [here](https://github.com/OGRECave/ogre-next/tree/master/Scripts/BuildScripts/output)) was used to get ogre-next and build it inside `Ogre/` (there is `ogre-next/` inside).  
+In root_dir a `build_ogre_*` script (from [here](https://github.com/OGRECave/ogre-next/tree/master/Scripts/BuildScripts/output)) was used to get ogre-next and build it inside `Ogre/` (there is `ogre-next/` inside it).  
 This repo was cloned into `mygui-next/`, branch **ogre3**.
 
 ## Build
+
+### Linux
 
 Whole build process in root dir:
 ```
@@ -53,3 +55,41 @@ cd Release
 cmake ./../.. -DCMAKE_BUILD_TYPE="Release"
 make -j6
 ```
+
+### Windows
+
+First build Ogre-Next using chosen `build_ogre_Visual_Studio_*.bat` in `root_dir\`.
+
+Then in `root_dir\`, to get these sources:
+```
+git clone https://github.com/cryham/mygui-next --branch ogre3 --single-branch
+cd mygui-next
+```
+Now _important_, we need to rename/replace cmake files with _Windows in name to such without.  
+So e.g. rename:  
+`CMake\Packages\FindFreetype_Windows.cmake` to:  
+`CMake\Packages\FindFreetype.cmake`  
+
+then rename (for Release build):  
+`CMake\Packages\FindOGRE_next_WindowsRelease.cmake`  
+`CMake\Packages\FindOGRE_next.cmake`  
+
+Next start CMake-Gui app and set sources dir to `root_dir\mygui-next`  
+and build dir (for Release) e.g. as `root_dir\mygui-next\build`.
+
+Click ok to create it, then press Configure twice, press Generate.  
+Open and build the created `MYGUI.sln` using VS (if that was chosen) from inside `build\Release\` dir.
+
+When successful, it will create in `root_dir\mygui-next\build\Release\`:  
+`bin\release\MyGUIEngine.dll`  
+`lib\Release\MyGUIEngine.lib`  
+`lib\Release\MyGUI.Ogre2Platform.lib`  
+
+#### Debug
+
+If you wish to build Debug config now too, then rename:  
+`CMake\Packages\FindOGRE_next_WindowsDebug.cmake` to:  
+`CMake\Packages\FindOGRE_next.cmake`  
+
+Then start CMake-Gui app and use same sources dir `root_dir\mygui-next`  
+but different build dir e.g. as `root_dir\mygui-next\buildDebug`.
