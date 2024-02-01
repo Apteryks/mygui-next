@@ -22,6 +22,7 @@
 #include <Compositor/Pass/OgreCompositorPassProvider.h>
 
 #include "MyGUI_LastHeader.h"
+#include <memory>
 
 namespace MyGUI
 {
@@ -245,7 +246,7 @@ namespace MyGUI
 
 		Ogre2GuiRenderable* createOrRetrieveRenderable(IVertexBuffer* _buffer , ITexture* _texture , size_t _count);
 
-		std::auto_ptr<OgreCompositorPassProvider> mPassProvider;
+		std::unique_ptr<OgreCompositorPassProvider> mPassProvider;
 	};
 
 } // namespace MyGUI
